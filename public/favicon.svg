@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#09090b"/>
+  <path d="M7 8H18C21.3137 8 24 10.6863 24 14C24 17.3137 21.3137 20 18 20H13V25H7V8Z" fill="url(#brand-grad)" />
+  <path d="M17 19L24.5 25H18.5L13 20H17Z" fill="#38bdf8" />
+  <circle cx="18" cy="14" r="2.5" fill="#09090b"/>
+  <defs>
+    <linearGradient id="brand-grad" x1="7" y1="8" x2="25" y2="25" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8" />
+      <stop offset="0.5" stop-color="#818cf8" />
+      <stop offset="1" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+</svg>
