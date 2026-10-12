@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, ShieldCheck } from 'lucide-react';
+import { Layers, ShieldCheck, ExternalLink } from 'lucide-react';
 
 interface HeaderProps {
   onReset?: () => void;
@@ -25,18 +25,26 @@ export const Header: React.FC<HeaderProps> = ({ onReset }) => {
         justifyContent: 'space-between',
       }}>
         {/* Left: Brand Logo & Tool Label */}
-        <div 
-          onClick={onReset} 
-          style={{ 
-            cursor: 'pointer', 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '1rem',
-            userSelect: 'none',
-          }}
-        >
-          {/* Logo Mark */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <a
+            href="/"
+            onClick={(e) => {
+              if (onReset) {
+                e.preventDefault();
+                onReset();
+              }
+            }}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.6rem',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              userSelect: 'none',
+            }}
+            title="RizNex — Homepage"
+          >
+            {/* Logo Mark */}
             <div style={{
               width: '34px',
               height: '34px',
@@ -59,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ onReset }) => {
                 letterSpacing: '-0.03em',
                 lineHeight: 1.1,
               }}>
-                Riznex
+                RizNex
               </span>
               <span style={{
                 fontSize: '0.7rem',
@@ -70,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ onReset }) => {
                 Compress Smart. Save Space.
               </span>
             </div>
-          </div>
+          </a>
 
           <div style={{ width: '1px', height: '22px', background: '#e5e7eb' }} />
 
@@ -100,23 +108,63 @@ export const Header: React.FC<HeaderProps> = ({ onReset }) => {
           </div>
         </div>
 
-        {/* Right: Client-Side Security Reassurance */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.4rem',
-          fontSize: '0.78rem',
-          fontWeight: 600,
-          color: '#059669',
-          background: '#ecfdf5',
-          padding: '0.3rem 0.75rem',
-          borderRadius: '9999px',
-          border: '1px solid #a7f3d0',
-        }}>
-          <ShieldCheck size={14} />
-          <span>100% In-Browser Privacy</span>
+        {/* Right: Security Badge & Creator link */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <a
+            href="https://rizwanbukhari-1.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '0.35rem',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              color: '#6b7280',
+              textDecoration: 'none',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '6px',
+              background: '#f8fafc',
+              border: '1px solid #e5e7eb',
+              transition: 'all 0.2s ease',
+            }}
+            className="creator-header-link"
+            title="Portfolio: Syed Rizwan Bukhari"
+          >
+            <span>Portfolio</span>
+            <ExternalLink size={12} color="#a855f7" />
+          </a>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontSize: '0.78rem',
+            fontWeight: 600,
+            color: '#059669',
+            background: '#ecfdf5',
+            padding: '0.3rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid #a7f3d0',
+          }}>
+            <ShieldCheck size={14} />
+            <span>100% In-Browser Privacy</span>
+          </div>
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 640px) {
+          .creator-header-link {
+            display: inline-flex !important;
+          }
+        }
+        .creator-header-link:hover {
+          background: #f3f4f6 !important;
+          color: #7c3aed !important;
+          border-color: #c4b5fd !important;
+        }
+      `}</style>
     </header>
   );
 };

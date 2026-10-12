@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Layers } from 'lucide-react';
+import { SocialBranding } from './SocialBranding';
 
 export const Footer: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ export const Footer: React.FC = () => {
         padding: '0 1.25rem',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1.5rem',
+        gap: '2rem',
       }}>
         {/* Top footer row */}
         <div style={{
@@ -26,28 +27,38 @@ export const Footer: React.FC = () => {
           gap: '1.25rem',
         }}>
           {/* Brand & Tagline */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <a 
+            href="/"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.65rem',
+              textDecoration: 'none',
+              cursor: 'pointer',
+            }}
+            title="RizNex — Home"
+          >
             <div style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '7px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
             }}>
-              <Layers size={16} />
+              <Layers size={17} />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1.1rem', color: '#111827', letterSpacing: '-0.02em' }}>
-                Riznex
+              <div style={{ fontWeight: 800, fontSize: '1.15rem', color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                RizNex
               </div>
               <div style={{ fontSize: '0.74rem', color: '#6b7280' }}>
                 Compress Smart. Save Space.
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Privacy statement */}
           <div style={{
@@ -62,14 +73,23 @@ export const Footer: React.FC = () => {
             border: '1px solid #a7f3d0',
           }}>
             <ShieldCheck size={16} />
-            <span>Files are processed locally in your browser. Nothing is uploaded to any server.</span>
+            <span>Files processed locally in your browser. Nothing uploaded to any server.</span>
           </div>
+        </div>
+
+        {/* Middle: Dedicated Creator Watermark & Clickable Social Profiles */}
+        <div style={{
+          padding: '1.5rem 0',
+          borderTop: '1px solid #f3f4f6',
+          borderBottom: '1px solid #f3f4f6',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
+          <SocialBranding variant="footer" />
         </div>
 
         {/* Bottom copyright */}
         <div style={{
-          borderTop: '1px solid #f3f4f6',
-          paddingTop: '1rem',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -79,7 +99,7 @@ export const Footer: React.FC = () => {
           color: '#9ca3af',
         }}>
           <div>
-            &copy; {new Date().getFullYear()} Riznex. Online image compression tool for JPG, PNG, and WebP.
+            &copy; {new Date().getFullYear()} RizNex. Online image compression tool for JPG, PNG, and WebP.
           </div>
           <div>
             Fast &bull; Private &bull; Free
