@@ -35,7 +35,7 @@ export const ImageCompressor: React.FC = () => {
   // Compression Mode: 'standard' or 'target'
   const [mode, setMode] = useState<CompressionMode>('standard');
   const [level, setLevel] = useState<CompressionLevel>('recommended');
-  const [formatPreference, setFormatPreference] = useState<'smart' | 'keep'>('smart');
+  const [formatPreference, _setFormatPreference] = useState<'smart' | 'keep'>('smart');
 
   // Target Size (KB) settings
   const [targetKBInput, setTargetKBInput] = useState<string>('200');
@@ -148,13 +148,13 @@ export const ImageCompressor: React.FC = () => {
     setIsProcessing(false);
     setIsCompleted(true);
 
-    // Fire celebration confetti
+    // Fire celebration confetti matching portfolio palette
     try {
       confetti({
-        particleCount: 75,
-        spread: 60,
-        origin: { y: 0.7 },
-        colors: ['#2563eb', '#4f46e5', '#10b981', '#38bdf8'],
+        particleCount: 80,
+        spread: 65,
+        origin: { y: 0.65 },
+        colors: ['#a78bfa', '#38bdf8', '#34d399', '#c4b5fd', '#818cf8'],
       });
     } catch {
       // safe fallback
@@ -176,7 +176,7 @@ export const ImageCompressor: React.FC = () => {
   const validTargetKB = parseInt(targetKBInput, 10);
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', position: 'relative', zIndex: 1 }}>
       {/* Hidden File Inputs */}
       <input
         ref={fileInputRef}
@@ -202,15 +202,17 @@ export const ImageCompressor: React.FC = () => {
           margin: '0 auto 1.5rem',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.6rem',
-          padding: '0.85rem 1.1rem',
-          borderRadius: '8px',
-          background: '#fef2f2',
-          border: '1px solid #fecaca',
-          color: '#b91c1c',
+          gap: '0.65rem',
+          padding: '0.9rem 1.25rem',
+          borderRadius: 'var(--radius-sm)',
+          background: 'rgba(239, 68, 68, 0.12)',
+          border: '1px solid rgba(239, 68, 68, 0.35)',
+          color: '#fca5a5',
           fontSize: '0.88rem',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
+          backdropFilter: 'blur(10px)',
         }}>
-          <AlertCircle size={18} />
+          <AlertCircle size={18} color="#f87171" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -219,26 +221,53 @@ export const ImageCompressor: React.FC = () => {
           STATE 1: EMPTY UPLOAD STATE
           ======================================================== */}
       {images.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '2rem 1rem 3rem' }}>
+        <div style={{ textAlign: 'center', padding: '1.5rem 1rem 3rem' }}>
+          {/* Subtle Tagline Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.82rem',
+            fontWeight: 700,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--accent-purple)',
+            marginBottom: '1rem',
+          }}>
+            <span style={{
+              width: '18px',
+              height: '2px',
+              background: 'var(--accent-purple)',
+              borderRadius: '2px',
+              display: 'inline-block',
+            }} />
+            <span>High-Speed In-Browser Compression</span>
+          </div>
+
           <h1 style={{
-            fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
+            fontSize: 'clamp(2.4rem, 5.5vw, 3.8rem)',
             fontWeight: 800,
-            color: '#111827',
-            letterSpacing: '-0.035em',
+            color: 'var(--text-white)',
+            letterSpacing: '-0.03em',
             lineHeight: 1.15,
             marginBottom: '0.85rem',
           }}>
-            Compress IMAGE
+            Compress <span style={{
+              background: 'var(--accent-gradient-text)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>IMAGE</span>
           </h1>
 
           <p style={{
-            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-            color: '#4b5563',
+            fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
+            color: 'var(--text-secondary)',
             maxWidth: '680px',
-            margin: '0 auto 2.5rem',
-            lineHeight: 1.5,
+            margin: '0 auto 2.75rem',
+            lineHeight: 1.6,
           }}>
-            Compress your images online and reduce file size while maintaining good visual quality.
+            Compress your images online and reduce file size while maintaining stunning visual quality. 100% private in your browser.
           </p>
 
           <div
@@ -246,43 +275,46 @@ export const ImageCompressor: React.FC = () => {
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
             style={{
-              maxWidth: '680px',
+              maxWidth: '720px',
               margin: '0 auto',
-              background: '#eff6ff',
-              border: '2px dashed #93c5fd',
-              borderRadius: '16px',
-              padding: '3.5rem 2rem',
+              background: 'var(--bg-card)',
+              border: '2px dashed var(--border-accent)',
+              borderRadius: '24px',
+              padding: '4rem 2rem',
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
+              transition: 'all var(--transition-normal)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              boxShadow: 'var(--shadow-lg)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#2563eb';
-              e.currentTarget.style.background = '#e0f2fe';
+              e.currentTarget.style.borderColor = 'var(--accent-purple)';
+              e.currentTarget.style.background = 'var(--bg-card-hover)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-purple-glow), var(--shadow-lg)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = '#93c5fd';
-              e.currentTarget.style.background = '#eff6ff';
+              e.currentTarget.style.borderColor = 'var(--border-accent)';
+              e.currentTarget.style.background = 'var(--bg-card)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             <button
               type="button"
+              className="btn-primary"
               style={{
-                background: '#2563eb',
-                color: '#ffffff',
                 fontSize: '1.25rem',
                 fontWeight: 700,
-                padding: '1.1rem 2.8rem',
-                borderRadius: '12px',
-                boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.75rem',
+                padding: '1.15rem 3rem',
+                borderRadius: '14px',
                 pointerEvents: 'none',
-                marginBottom: '1rem',
+                marginBottom: '1.25rem',
+                gap: '0.8rem',
               }}
             >
               <Upload size={24} />
@@ -290,17 +322,18 @@ export const ImageCompressor: React.FC = () => {
             </button>
 
             <div style={{
-              fontSize: '1rem',
-              fontWeight: 500,
-              color: '#4b5563',
+              fontSize: '1.05rem',
+              fontWeight: 600,
+              color: 'var(--text-primary)',
               marginBottom: '0.5rem',
             }}>
               or drop images here
             </div>
 
             <div style={{
-              fontSize: '0.8rem',
-              color: '#6b7280',
+              fontSize: '0.82rem',
+              color: 'var(--text-muted)',
+              fontFamily: 'var(--font-mono)',
             }}>
               JPG, PNG, or WebP &bull; Select single or multiple images
             </div>
@@ -312,7 +345,7 @@ export const ImageCompressor: React.FC = () => {
           STATE 2: REVIEW QUEUE (Images selected, configure mode)
           ======================================================== */}
       {images.length > 0 && !isCompleted && !isProcessing && (
-        <div style={{ maxWidth: '980px', margin: '0 auto', padding: '1rem 0 3rem' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0.5rem 0 3rem' }}>
           {/* Top Review Bar */}
           <div style={{
             display: 'flex',
@@ -320,24 +353,24 @@ export const ImageCompressor: React.FC = () => {
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '1rem',
-            borderBottom: '1px solid #e5e7eb',
-            paddingBottom: '1rem',
-            marginBottom: '1.5rem',
+            borderBottom: '1px solid var(--border-subtle)',
+            paddingBottom: '1.25rem',
+            marginBottom: '1.75rem',
           }}>
             <div>
-              <h2 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#111827' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-white)', fontFamily: 'var(--font-heading)' }}>
                 Images Selected ({images.length})
               </h2>
-              <div style={{ fontSize: '0.85rem', color: '#6b7280', marginTop: '2px' }}>
-                Total original size: <strong>{formatBytes(totalOriginalSize)}</strong>
+              <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                Total original size: <strong style={{ color: 'var(--accent-purple-light)', fontFamily: 'var(--font-mono)' }}>{formatBytes(totalOriginalSize)}</strong>
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button
                 onClick={() => addMoreInputRef.current?.click()}
                 className="btn-secondary"
-                style={{ fontSize: '0.85rem', padding: '0.5rem 0.9rem' }}
+                style={{ fontSize: '0.86rem', padding: '0.55rem 1rem' }}
               >
                 <Plus size={16} />
                 <span>Add more images</span>
@@ -345,8 +378,14 @@ export const ImageCompressor: React.FC = () => {
 
               <button
                 onClick={clearAll}
-                className="btn-secondary"
-                style={{ fontSize: '0.85rem', padding: '0.5rem 0.9rem', color: '#dc2626' }}
+                className="btn-secondary danger-clear-btn"
+                style={{
+                  fontSize: '0.86rem',
+                  padding: '0.55rem 1rem',
+                  color: '#fca5a5',
+                  borderColor: 'rgba(239, 68, 68, 0.3)',
+                  background: 'rgba(239, 68, 68, 0.08)',
+                }}
               >
                 <Trash2 size={16} />
                 <span>Clear all</span>
@@ -357,27 +396,32 @@ export const ImageCompressor: React.FC = () => {
           {/* Images Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: '1rem',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(225px, 1fr))',
+            gap: '1.15rem',
             marginBottom: '2rem',
           }}>
             {images.map((item) => (
               <div
                 key={item.id}
                 style={{
-                  background: '#ffffff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '12px',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-card)',
+                  borderRadius: 'var(--radius-md)',
                   overflow: 'hidden',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.04)',
+                  boxShadow: 'var(--shadow-md)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
+                  transition: 'all var(--transition-normal)',
                 }}
+                className="image-queue-card"
               >
                 <div style={{
                   height: '160px',
-                  background: '#f8fafc',
+                  background: 'rgba(8, 9, 13, 0.85)',
+                  borderBottom: '1px solid var(--border-subtle)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -396,51 +440,53 @@ export const ImageCompressor: React.FC = () => {
                       position: 'absolute',
                       top: '8px',
                       right: '8px',
-                      width: '28px',
-                      height: '28px',
+                      width: '30px',
+                      height: '30px',
                       borderRadius: '50%',
-                      background: 'rgba(255, 255, 255, 0.9)',
-                      color: '#dc2626',
+                      background: 'rgba(10, 12, 18, 0.85)',
+                      border: '1px solid rgba(239, 68, 68, 0.4)',
+                      color: '#f87171',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
+                      transition: 'all 0.2s ease',
                     }}
+                    className="remove-img-btn"
                     title="Remove image"
                   >
                     <Trash2 size={14} />
                   </button>
                 </div>
 
-                <div style={{ padding: '0.75rem 0.85rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div style={{ padding: '0.85rem 0.95rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{
                       fontWeight: 700,
-                      fontSize: '0.85rem',
-                      color: '#111827',
+                      fontSize: '0.88rem',
+                      color: 'var(--text-white)',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }} title={item.name}>
                       {item.name}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '2px' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', marginTop: '2px', fontFamily: 'var(--font-mono)' }}>
                       {item.width} &times; {item.height} px
                     </div>
                   </div>
 
                   <div style={{
-                    marginTop: '0.5rem',
-                    paddingTop: '0.4rem',
-                    borderTop: '1px solid #f3f4f6',
+                    marginTop: '0.65rem',
+                    paddingTop: '0.5rem',
+                    borderTop: '1px solid var(--border-subtle)',
                     display: 'flex',
                     justifyContent: 'space-between',
-                    fontSize: '0.78rem',
+                    fontSize: '0.8rem',
                     fontWeight: 600,
-                    color: '#374151',
                   }}>
-                    <span>Original:</span>
-                    <span>{formatBytes(item.originalSize)}</span>
+                    <span style={{ color: 'var(--text-muted)' }}>Original:</span>
+                    <span style={{ color: 'var(--accent-purple-light)', fontFamily: 'var(--font-mono)' }}>{formatBytes(item.originalSize)}</span>
                   </div>
                 </div>
               </div>
@@ -449,11 +495,13 @@ export const ImageCompressor: React.FC = () => {
 
           {/* Bottom Settings & Action Box */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '16px',
-            padding: '1.75rem',
-            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.05)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-card)',
+            borderRadius: '20px',
+            padding: '1.85rem',
+            boxShadow: 'var(--shadow-lg)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
             display: 'flex',
             flexDirection: 'column',
             gap: '1.5rem',
@@ -463,29 +511,35 @@ export const ImageCompressor: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderBottom: '1px solid #f3f4f6',
-              paddingBottom: '1rem',
+              borderBottom: '1px solid var(--border-subtle)',
+              paddingBottom: '1.25rem',
               flexWrap: 'wrap',
-              gap: '0.75rem',
+              gap: '0.85rem',
             }}>
-              <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#111827', marginRight: '0.85rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.85rem' }}>
+                <span style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-white)', fontFamily: 'var(--font-heading)' }}>
                   Compression Mode:
                 </span>
-                <div style={{ display: 'inline-flex', background: '#f1f5f9', padding: '3px', borderRadius: '8px' }}>
+                <div style={{
+                  display: 'inline-flex',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid var(--border-subtle)',
+                  padding: '4px',
+                  borderRadius: '10px',
+                }}>
                   <button
                     onClick={() => { setMode('standard'); setTargetError(null); }}
                     style={{
-                      padding: '0.45rem 1rem',
-                      borderRadius: '6px',
-                      fontSize: '0.85rem',
+                      padding: '0.5rem 1.1rem',
+                      borderRadius: '8px',
+                      fontSize: '0.86rem',
                       fontWeight: 700,
-                      background: mode === 'standard' ? '#ffffff' : 'transparent',
-                      color: mode === 'standard' ? '#2563eb' : '#64748b',
-                      boxShadow: mode === 'standard' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                      background: mode === 'standard' ? 'var(--accent-gradient)' : 'transparent',
+                      color: mode === 'standard' ? '#08090d' : 'var(--text-muted)',
+                      boxShadow: mode === 'standard' ? '0 2px 10px rgba(167, 139, 250, 0.35)' : 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '0.4rem',
+                      gap: '0.45rem',
                     }}
                   >
                     <Sliders size={15} />
@@ -495,16 +549,16 @@ export const ImageCompressor: React.FC = () => {
                   <button
                     onClick={() => { setMode('target'); setTargetError(null); }}
                     style={{
-                      padding: '0.45rem 1rem',
-                      borderRadius: '6px',
-                      fontSize: '0.85rem',
+                      padding: '0.5rem 1.1rem',
+                      borderRadius: '8px',
+                      fontSize: '0.86rem',
                       fontWeight: 700,
-                      background: mode === 'target' ? '#ffffff' : 'transparent',
-                      color: mode === 'target' ? '#2563eb' : '#64748b',
-                      boxShadow: mode === 'target' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                      background: mode === 'target' ? 'var(--accent-gradient)' : 'transparent',
+                      color: mode === 'target' ? '#08090d' : 'var(--text-muted)',
+                      boxShadow: mode === 'target' ? '0 2px 10px rgba(167, 139, 250, 0.35)' : 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '0.4rem',
+                      gap: '0.45rem',
                     }}
                   >
                     <Target size={15} />
@@ -514,7 +568,15 @@ export const ImageCompressor: React.FC = () => {
               </div>
 
               {mode === 'target' && (
-                <div style={{ fontSize: '0.78rem', color: '#059669', background: '#ecfdf5', padding: '0.2rem 0.65rem', borderRadius: '9999px', fontWeight: 600 }}>
+                <div style={{
+                  fontSize: '0.78rem',
+                  color: 'var(--accent-emerald)',
+                  background: 'var(--accent-emerald-subtle)',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '9999px',
+                  border: '1px solid rgba(52, 211, 153, 0.3)',
+                  fontWeight: 700,
+                }}>
                   Iterative Size Optimizer
                 </div>
               )}
@@ -527,13 +589,13 @@ export const ImageCompressor: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                gap: '1.25rem',
+                gap: '1.5rem',
               }}>
                 <div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#111827', marginBottom: '0.4rem' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '0.5rem' }}>
                     Quality Profile
                   </div>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap' }}>
                     {[
                       { id: 'recommended', label: 'Recommended', desc: 'Best balance of quality and file size' },
                       { id: 'high', label: 'Extreme', desc: 'Smaller file size, higher compression' },
@@ -543,14 +605,16 @@ export const ImageCompressor: React.FC = () => {
                         key={opt.id}
                         onClick={() => setLevel(opt.id as CompressionLevel)}
                         style={{
-                          padding: '0.45rem 0.85rem',
+                          padding: '0.5rem 1rem',
                           borderRadius: '8px',
-                          fontSize: '0.82rem',
-                          fontWeight: 600,
-                          background: level === opt.id ? '#2563eb' : '#f3f4f6',
-                          color: level === opt.id ? '#ffffff' : '#4b5563',
+                          fontSize: '0.84rem',
+                          fontWeight: 700,
+                          background: level === opt.id ? 'var(--accent-purple)' : 'rgba(255, 255, 255, 0.05)',
+                          color: level === opt.id ? '#08090d' : 'var(--text-secondary)',
                           border: '1px solid',
-                          borderColor: level === opt.id ? '#2563eb' : '#e5e7eb',
+                          borderColor: level === opt.id ? 'var(--accent-purple)' : 'var(--border-subtle)',
+                          boxShadow: level === opt.id ? 'var(--shadow-purple-glow)' : 'none',
+                          transition: 'all var(--transition-fast)',
                         }}
                         title={opt.desc}
                       >
@@ -563,19 +627,12 @@ export const ImageCompressor: React.FC = () => {
                 {/* Big Action Button */}
                 <button
                   onClick={handleCompressAll}
+                  className="btn-primary"
                   style={{
-                    background: '#2563eb',
-                    color: '#ffffff',
                     fontSize: '1.15rem',
-                    fontWeight: 700,
-                    padding: '0.95rem 2.4rem',
+                    padding: '1rem 2.5rem',
                     borderRadius: '12px',
-                    boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.65rem',
                     minWidth: '240px',
-                    justifyContent: 'center',
                   }}
                 >
                   <span>Compress {images.length} {images.length === 1 ? 'Image' : 'Images'}</span>
@@ -598,24 +655,25 @@ export const ImageCompressor: React.FC = () => {
                   <div style={{ flex: 1, minWidth: '280px' }}>
                     <label style={{
                       display: 'block',
-                      fontSize: '0.88rem',
+                      fontSize: '0.9rem',
                       fontWeight: 700,
-                      color: '#111827',
-                      marginBottom: '0.45rem',
+                      color: 'var(--text-white)',
+                      marginBottom: '0.5rem',
                     }}>
                       Target size (KB)
                     </label>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        background: '#ffffff',
+                        background: 'rgba(255, 255, 255, 0.05)',
                         border: '1.5px solid',
-                        borderColor: targetError ? '#dc2626' : '#2563eb',
+                        borderColor: targetError ? '#ef4444' : 'var(--border-accent)',
                         borderRadius: '8px',
                         overflow: 'hidden',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+                        boxShadow: 'var(--shadow-sm)',
+                        transition: 'border-color 0.2s ease',
                       }}>
                         <input
                           type="number"
@@ -629,29 +687,30 @@ export const ImageCompressor: React.FC = () => {
                           }}
                           style={{
                             width: '120px',
-                            padding: '0.55rem 0.75rem',
-                            fontSize: '1rem',
+                            padding: '0.6rem 0.8rem',
+                            fontSize: '1.05rem',
                             fontWeight: 700,
                             border: 'none',
                             outline: 'none',
-                            color: '#111827',
+                            background: 'transparent',
+                            color: 'var(--text-white)',
                             fontFamily: 'var(--font-mono)',
                           }}
                         />
                         <span style={{
-                          padding: '0.55rem 0.85rem',
-                          background: '#f1f5f9',
+                          padding: '0.6rem 0.9rem',
+                          background: 'rgba(255, 255, 255, 0.08)',
                           fontWeight: 700,
                           fontSize: '0.85rem',
-                          color: '#475569',
-                          borderLeft: '1px solid #e2e8f0',
+                          color: 'var(--accent-purple-light)',
+                          borderLeft: '1px solid var(--border-subtle)',
                         }}>
                           KB
                         </span>
                       </div>
 
                       {/* Quick Target Presets */}
-                      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                         {[50, 100, 200, 300, 500, 1000].map((preset) => (
                           <button
                             key={preset}
@@ -661,14 +720,16 @@ export const ImageCompressor: React.FC = () => {
                               setTargetError(null);
                             }}
                             style={{
-                              padding: '0.35rem 0.6rem',
+                              padding: '0.4rem 0.65rem',
                               borderRadius: '6px',
-                              fontSize: '0.78rem',
-                              fontWeight: 600,
-                              background: targetKBInput === preset.toString() ? '#eff6ff' : '#f8fafc',
-                              color: targetKBInput === preset.toString() ? '#2563eb' : '#4b5563',
+                              fontSize: '0.8rem',
+                              fontWeight: 700,
+                              fontFamily: 'var(--font-mono)',
+                              background: targetKBInput === preset.toString() ? 'var(--accent-purple-subtle)' : 'rgba(255, 255, 255, 0.04)',
+                              color: targetKBInput === preset.toString() ? 'var(--accent-purple)' : 'var(--text-secondary)',
                               border: '1px solid',
-                              borderColor: targetKBInput === preset.toString() ? '#93c5fd' : '#e5e7eb',
+                              borderColor: targetKBInput === preset.toString() ? 'var(--accent-purple)' : 'var(--border-subtle)',
+                              transition: 'all 0.15s ease',
                             }}
                           >
                             {preset < 1000 ? `${preset} KB` : '1 MB'}
@@ -678,27 +739,27 @@ export const ImageCompressor: React.FC = () => {
                     </div>
 
                     {targetError && (
-                      <div style={{ color: '#dc2626', fontSize: '0.8rem', fontWeight: 500, marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#f87171', fontSize: '0.82rem', fontWeight: 600, marginBottom: '0.5rem' }}>
                         {targetError}
                       </div>
                     )}
 
-                    <div style={{ fontSize: '0.78rem', color: '#6b7280', lineHeight: 1.45 }}>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                       Riznex iteratively adjusts quality in your browser to get as close as possible to your desired file size.
                     </div>
 
                     {/* Resize Dimensions Checkbox */}
-                    <div style={{ marginTop: '0.85rem' }}>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.84rem', color: '#374151', fontWeight: 600 }}>
+                    <div style={{ marginTop: '0.95rem' }}>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--text-primary)', fontWeight: 600 }}>
                         <input
                           type="checkbox"
                           checked={allowDownscale}
                           onChange={(e) => setAllowDownscale(e.target.checked)}
-                          style={{ width: '16px', height: '16px', accentColor: '#2563eb', cursor: 'pointer' }}
+                          style={{ width: '16px', height: '16px', accentColor: 'var(--accent-purple)', cursor: 'pointer' }}
                         />
                         <span>Auto-resize dimensions if needed to achieve small target</span>
                       </label>
-                      <div style={{ fontSize: '0.74rem', color: '#9ca3af', marginLeft: '1.55rem', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', marginLeft: '1.65rem', marginTop: '2px' }}>
                         Recommended for very small targets (e.g. 50-100 KB) on high-resolution photos where quality alone is not enough.
                       </div>
                     </div>
@@ -708,25 +769,18 @@ export const ImageCompressor: React.FC = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
                     <button
                       onClick={handleCompressAll}
+                      className="btn-primary"
                       style={{
-                        background: '#2563eb',
-                        color: '#ffffff',
                         fontSize: '1.15rem',
-                        fontWeight: 700,
-                        padding: '1rem 2.4rem',
+                        padding: '1.05rem 2.5rem',
                         borderRadius: '12px',
-                        boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.65rem',
                         minWidth: '260px',
-                        justifyContent: 'center',
                       }}
                     >
                       <Target size={20} />
                       <span>Compress to Target Size</span>
                     </button>
-                    <span style={{ fontSize: '0.76rem', color: '#6b7280', marginTop: '0.4rem', marginRight: '4px' }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.5rem', marginRight: '4px', fontFamily: 'var(--font-mono)' }}>
                       Goal: &le; {validTargetKB || 200} KB per image
                     </span>
                   </div>
@@ -741,21 +795,22 @@ export const ImageCompressor: React.FC = () => {
           STATE 3: COMPRESSING IN PROGRESS
           ======================================================== */}
       {isProcessing && (
-        <div style={{ textAlign: 'center', padding: '4rem 1rem', maxWidth: '520px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', padding: '4.5rem 1rem', maxWidth: '540px', margin: '0 auto' }}>
           <div style={{
-            width: '64px',
-            height: '64px',
+            width: '68px',
+            height: '68px',
             borderRadius: '50%',
-            border: '4px solid #dbeafe',
-            borderTopColor: '#2563eb',
+            border: '4px solid rgba(167, 139, 250, 0.15)',
+            borderTopColor: 'var(--accent-purple)',
+            boxShadow: 'var(--shadow-purple-glow)',
             animation: 'spin 0.8s linear infinite',
-            margin: '0 auto 1.5rem',
+            margin: '0 auto 1.75rem',
           }} />
 
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#111827', marginBottom: '0.5rem' }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-white)', marginBottom: '0.6rem', fontFamily: 'var(--font-heading)' }}>
             {mode === 'target' ? 'Optimizing to target file size...' : 'Compressing your images...'}
           </h2>
-          <p style={{ fontSize: '0.92rem', color: '#6b7280', marginBottom: '1.5rem' }}>
+          <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', marginBottom: '1.75rem' }}>
             {mode === 'target' 
               ? `Iterating quality & encoding to reach ~${targetKBInput} KB (Image ${progressCount} of ${images.length})...`
               : `Processing image ${progressCount} of ${images.length} directly in your browser.`}
@@ -764,14 +819,16 @@ export const ImageCompressor: React.FC = () => {
           <div style={{
             width: '100%',
             height: '8px',
-            background: '#e5e7eb',
+            background: 'rgba(255, 255, 255, 0.08)',
+            border: '1px solid var(--border-subtle)',
             borderRadius: '9999px',
             overflow: 'hidden',
           }}>
             <div style={{
               width: `${(progressCount / images.length) * 100}%`,
               height: '100%',
-              background: '#2563eb',
+              background: 'var(--accent-gradient)',
+              boxShadow: '0 0 12px rgba(167, 139, 250, 0.6)',
               transition: 'width 0.2s ease',
             }} />
           </div>
@@ -782,32 +839,36 @@ export const ImageCompressor: React.FC = () => {
           STATE 4: RESULTS & DOWNLOADS (Complete)
           ======================================================== */}
       {isCompleted && !isProcessing && (
-        <div style={{ maxWidth: '980px', margin: '0 auto', padding: '1rem 0 3.5rem' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0.5rem 0 3.5rem' }}>
           {/* Success Banner */}
           <div style={{
-            background: '#ffffff',
-            border: '1.5px solid #a7f3d0',
-            borderRadius: '16px',
-            padding: '2rem',
+            background: 'var(--bg-card)',
+            border: '1.5px solid rgba(52, 211, 153, 0.35)',
+            borderRadius: '20px',
+            padding: '2.25rem 2rem',
             textAlign: 'center',
-            boxShadow: '0 4px 16px rgba(16, 185, 129, 0.08)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 25px rgba(52, 211, 153, 0.15)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
             marginBottom: '2rem',
           }}>
             <div style={{
-              width: '54px',
-              height: '54px',
+              width: '56px',
+              height: '56px',
               borderRadius: '50%',
-              background: '#ecfdf5',
-              color: '#059669',
+              background: 'var(--accent-emerald-subtle)',
+              color: 'var(--accent-emerald)',
+              border: '1px solid rgba(52, 211, 153, 0.35)',
+              boxShadow: '0 0 20px rgba(52, 211, 153, 0.25)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              margin: '0 auto 1rem',
+              margin: '0 auto 1.15rem',
             }}>
-              <CheckCircle2 size={32} />
+              <CheckCircle2 size={34} />
             </div>
 
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#111827', marginBottom: '0.35rem' }}>
+            <h2 style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-white)', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)' }}>
               Your images have been compressed!
             </h2>
 
@@ -816,42 +877,39 @@ export const ImageCompressor: React.FC = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '1rem',
-              background: '#f8fafc',
-              padding: '0.65rem 1.4rem',
-              borderRadius: '9999px',
-              border: '1px solid #e2e8f0',
-              margin: '1rem auto 1.5rem',
-              fontSize: '0.95rem',
+              background: 'rgba(255, 255, 255, 0.05)',
+              padding: '0.7rem 1.5rem',
+              borderRadius: 'var(--radius-full)',
+              border: '1px solid var(--border-card)',
+              margin: '1.15rem auto 1.75rem',
+              fontSize: '0.98rem',
+              backdropFilter: 'blur(8px)',
             }}>
-              <span style={{ color: '#6b7280' }}>
-                {formatBytes(totalOriginalSize)} &rarr; <strong style={{ color: '#111827' }}>{formatBytes(totalCompressedSize)}</strong>
+              <span style={{ color: 'var(--text-muted)' }}>
+                {formatBytes(totalOriginalSize)} &rarr; <strong style={{ color: 'var(--text-white)', fontFamily: 'var(--font-mono)' }}>{formatBytes(totalCompressedSize)}</strong>
               </span>
               <span style={{
-                color: totalSavingsPercentage > 0 ? '#059669' : '#6b7280',
+                color: totalSavingsPercentage > 0 ? 'var(--accent-emerald)' : 'var(--text-muted)',
                 fontWeight: 700,
-                background: totalSavingsPercentage > 0 ? '#ecfdf5' : '#f3f4f6',
-                padding: '0.15rem 0.6rem',
+                background: totalSavingsPercentage > 0 ? 'var(--accent-emerald-subtle)' : 'rgba(255, 255, 255, 0.05)',
+                padding: '0.2rem 0.65rem',
                 borderRadius: '9999px',
+                border: totalSavingsPercentage > 0 ? '1px solid rgba(52, 211, 153, 0.3)' : '1px solid var(--border-subtle)',
+                fontFamily: 'var(--font-mono)',
               }}>
                 {totalSavingsPercentage > 0 ? `-${totalSavingsPercentage}%` : 'Optimal size'}
               </span>
             </div>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
               <button
                 onClick={handleDownloadAll}
+                className="btn-primary"
                 style={{
-                  background: '#2563eb',
-                  color: '#ffffff',
                   fontSize: '1.05rem',
-                  fontWeight: 700,
-                  padding: '0.85rem 2rem',
+                  padding: '0.9rem 2.2rem',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
                 }}
               >
                 {images.length > 1 ? (
@@ -870,7 +928,7 @@ export const ImageCompressor: React.FC = () => {
               <button
                 onClick={clearAll}
                 className="btn-secondary"
-                style={{ fontSize: '0.95rem', padding: '0.85rem 1.5rem' }}
+                style={{ fontSize: '0.95rem', padding: '0.9rem 1.6rem', borderRadius: '12px' }}
               >
                 <RotateCcw size={18} />
                 <span>Compress More Images</span>
@@ -880,46 +938,50 @@ export const ImageCompressor: React.FC = () => {
 
           {/* Compressed Items List */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '16px',
-            padding: '1.25rem',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-card)',
+            borderRadius: '20px',
+            padding: '1.5rem',
+            boxShadow: 'var(--shadow-md)',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#111827', marginBottom: '1rem' }}>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-white)', marginBottom: '1.15rem', fontFamily: 'var(--font-heading)' }}>
               Compression Breakdown
             </h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {images.map((item) => (
                 <div
                   key={item.id}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    padding: '0.85rem 1rem',
-                    background: '#f8fafc',
-                    borderRadius: '10px',
-                    border: '1px solid #e2e8f0',
-                    gap: '0.5rem',
+                    padding: '0.95rem 1.15rem',
+                    background: 'rgba(13, 15, 22, 0.75)',
+                    borderRadius: '12px',
+                    border: '1px solid var(--border-subtle)',
+                    gap: '0.55rem',
+                    transition: 'border-color 0.2s ease',
                   }}
+                  className="breakdown-row"
                 >
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     flexWrap: 'wrap',
-                    gap: '0.75rem',
+                    gap: '0.85rem',
                   }}>
                     {/* Left: Thumbnail & Name */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: '220px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.95rem', minWidth: '220px' }}>
                       <div style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '6px',
+                        width: '46px',
+                        height: '46px',
+                        borderRadius: '8px',
                         overflow: 'hidden',
-                        background: '#ffffff',
-                        border: '1px solid #e5e7eb',
+                        background: 'rgba(8, 9, 13, 0.85)',
+                        border: '1px solid var(--border-subtle)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -928,14 +990,14 @@ export const ImageCompressor: React.FC = () => {
                         <img
                           src={item.compressedUrl || item.previewUrl}
                           alt={item.name}
-                          style={{ maxWidth: '100%', maxHeight: '44px', objectFit: 'contain' }}
+                          style={{ maxWidth: '100%', maxHeight: '46px', objectFit: 'contain' }}
                         />
                       </div>
                       <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#111827' }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-white)' }}>
                           {item.name}
                         </div>
-                        <div style={{ fontSize: '0.74rem', color: '#6b7280' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontFamily: 'var(--font-mono)' }}>
                           {item.compressedWidth || item.width} &times; {item.compressedHeight || item.height} px
                         </div>
                       </div>
@@ -943,10 +1005,10 @@ export const ImageCompressor: React.FC = () => {
 
                     {/* Middle: Before & After Size & Target Badge */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                      <div style={{ fontSize: '0.82rem', color: '#6b7280' }}>
-                        <span>Original: <strong>{formatBytes(item.originalSize)}</strong></span>
-                        <span style={{ margin: '0 0.5rem' }}>&rarr;</span>
-                        <span style={{ color: '#111827' }}>Final: <strong>{formatBytes(item.compressedSize || item.originalSize)}</strong></span>
+                      <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                        <span>Original: <strong style={{ color: 'var(--text-secondary)' }}>{formatBytes(item.originalSize)}</strong></span>
+                        <span style={{ margin: '0 0.5rem', color: 'var(--accent-purple)' }}>&rarr;</span>
+                        <span>Final: <strong style={{ color: 'var(--text-white)' }}>{formatBytes(item.compressedSize || item.originalSize)}</strong></span>
                       </div>
 
                       {/* Target Achievement Status */}
@@ -954,15 +1016,16 @@ export const ImageCompressor: React.FC = () => {
                         <span style={{
                           fontSize: '0.78rem',
                           fontWeight: 700,
-                          padding: '0.2rem 0.65rem',
+                          padding: '0.22rem 0.7rem',
                           borderRadius: '9999px',
                           display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '0.3rem',
-                          background: item.targetAchieved ? '#ecfdf5' : '#fffbeb',
-                          color: item.targetAchieved ? '#059669' : '#b45309',
+                          gap: '0.35rem',
+                          background: item.targetAchieved ? 'var(--accent-emerald-subtle)' : 'rgba(245, 158, 11, 0.12)',
+                          color: item.targetAchieved ? 'var(--accent-emerald)' : '#fbbf24',
                           border: '1px solid',
-                          borderColor: item.targetAchieved ? '#a7f3d0' : '#fde68a',
+                          borderColor: item.targetAchieved ? 'rgba(52, 211, 153, 0.3)' : 'rgba(245, 158, 11, 0.3)',
+                          fontFamily: 'var(--font-mono)',
                         }}>
                           {item.targetAchieved ? (
                             <>
@@ -982,10 +1045,12 @@ export const ImageCompressor: React.FC = () => {
                       <span style={{
                         fontSize: '0.82rem',
                         fontWeight: 700,
-                        padding: '0.2rem 0.6rem',
+                        padding: '0.22rem 0.65rem',
                         borderRadius: '9999px',
-                        background: (item.savingsPercentage ?? 0) > 0 ? '#ecfdf5' : '#f3f4f6',
-                        color: (item.savingsPercentage ?? 0) > 0 ? '#059669' : '#6b7280',
+                        background: (item.savingsPercentage ?? 0) > 0 ? 'var(--accent-emerald-subtle)' : 'rgba(255, 255, 255, 0.05)',
+                        color: (item.savingsPercentage ?? 0) > 0 ? 'var(--accent-emerald)' : 'var(--text-muted)',
+                        border: (item.savingsPercentage ?? 0) > 0 ? '1px solid rgba(52, 211, 153, 0.3)' : '1px solid var(--border-subtle)',
+                        fontFamily: 'var(--font-mono)',
                       }}>
                         {(item.savingsPercentage ?? 0) > 0 ? `-${item.savingsPercentage}%` : 'Optimal'}
                       </span>
@@ -996,7 +1061,7 @@ export const ImageCompressor: React.FC = () => {
                       <button
                         onClick={() => downloadSingleImage(item)}
                         className="btn-secondary"
-                        style={{ padding: '0.4rem 0.85rem', fontSize: '0.82rem' }}
+                        style={{ padding: '0.45rem 0.95rem', fontSize: '0.82rem' }}
                         title="Download this image"
                       >
                         <Download size={15} />
@@ -1008,14 +1073,16 @@ export const ImageCompressor: React.FC = () => {
                   {/* Target Note if exists */}
                   {item.targetNote && (
                     <div style={{
-                      fontSize: '0.74rem',
-                      color: item.targetAchieved ? '#059669' : '#4b5563',
-                      background: item.targetAchieved ? '#f0fdf4' : '#f8fafc',
-                      padding: '0.25rem 0.65rem',
+                      fontSize: '0.75rem',
+                      color: item.targetAchieved ? 'var(--accent-emerald)' : 'var(--text-secondary)',
+                      background: item.targetAchieved ? 'var(--accent-emerald-subtle)' : 'rgba(255, 255, 255, 0.04)',
+                      padding: '0.25rem 0.75rem',
                       borderRadius: '6px',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '0.35rem',
+                      border: '1px solid',
+                      borderColor: item.targetAchieved ? 'rgba(52, 211, 153, 0.2)' : 'var(--border-subtle)',
                     }}>
                       <Info size={12} />
                       <span>{item.targetNote}</span>
@@ -1027,6 +1094,30 @@ export const ImageCompressor: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Scoped CSS for hover micro-animations */}
+      <style>{`
+        .image-queue-card:hover {
+          border-color: var(--border-accent) !important;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 16px rgba(167, 139, 250, 0.2) !important;
+        }
+        .remove-img-btn:hover {
+          background: #ef4444 !important;
+          color: #ffffff !important;
+          border-color: #ef4444 !important;
+          transform: scale(1.08);
+        }
+        .danger-clear-btn:hover {
+          background: #ef4444 !important;
+          color: #ffffff !important;
+          border-color: #ef4444 !important;
+          box-shadow: 0 0 16px rgba(239, 68, 68, 0.35) !important;
+        }
+        .breakdown-row:hover {
+          border-color: var(--border-accent) !important;
+        }
+      `}</style>
     </div>
   );
 };

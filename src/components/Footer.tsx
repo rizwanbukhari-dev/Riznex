@@ -2,13 +2,17 @@ import React from 'react';
 import { ShieldCheck, Layers } from 'lucide-react';
 import { SocialBranding } from './SocialBranding';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const Footer: React.FC = () => {
   return (
     <footer style={{
-      background: '#ffffff',
-      borderTop: '1px solid #e5e7eb',
+      background: 'var(--bg-footer)',
+      borderTop: '1px solid var(--border-subtle)',
       marginTop: 'auto',
-      padding: '2.5rem 0 2rem',
+      padding: '3rem 0 2rem',
+      position: 'relative',
+      zIndex: 10,
     }}>
       <div style={{
         maxWidth: '1180px',
@@ -16,7 +20,7 @@ export const Footer: React.FC = () => {
         padding: '0 1.25rem',
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
+        gap: '2.25rem',
       }}>
         {/* Top footer row */}
         <div style={{
@@ -32,56 +36,66 @@ export const Footer: React.FC = () => {
             style={{ 
               display: 'flex', 
               alignItems: 'center', 
-              gap: '0.65rem',
+              gap: '0.75rem',
               textDecoration: 'none',
               cursor: 'pointer',
             }}
             title="RizNex — Home"
           >
             <div style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)',
+              width: '34px',
+              height: '34px',
+              borderRadius: '9px',
+              background: 'var(--brand-gradient)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
+              boxShadow: '0 0 16px rgba(167, 139, 250, 0.35)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
             }}>
-              <Layers size={17} />
+              <Layers size={18} />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1.15rem', color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+              <div style={{ 
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 800, 
+                fontSize: '1.2rem', 
+                color: 'var(--text-white)', 
+                letterSpacing: '-0.02em', 
+                lineHeight: 1.15 
+              }}>
                 RizNex
               </div>
-              <div style={{ fontSize: '0.74rem', color: '#6b7280' }}>
+              <div style={{ fontSize: '0.72rem', color: 'var(--accent-purple)', fontWeight: 500 }}>
                 Compress Smart. Save Space.
               </div>
             </div>
           </a>
 
-          {/* Privacy statement */}
+          {/* Privacy statement matching portfolio emerald badge */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem',
+            gap: '0.5rem',
             fontSize: '0.82rem',
-            color: '#059669',
-            background: '#ecfdf5',
-            padding: '0.35rem 0.85rem',
+            color: 'var(--accent-emerald)',
+            background: 'var(--accent-emerald-subtle)',
+            padding: '0.4rem 0.95rem',
             borderRadius: '9999px',
-            border: '1px solid #a7f3d0',
+            border: '1px solid rgba(52, 211, 153, 0.3)',
+            boxShadow: '0 0 14px rgba(52, 211, 153, 0.1)',
           }}>
             <ShieldCheck size={16} />
-            <span>Files processed locally in your browser. Nothing uploaded to any server.</span>
+            <span>Files processed locally in your browser. 100% private.</span>
           </div>
         </div>
 
         {/* Middle: Dedicated Creator Watermark & Clickable Social Profiles */}
         <div style={{
-          padding: '1.5rem 0',
-          borderTop: '1px solid #f3f4f6',
-          borderBottom: '1px solid #f3f4f6',
+          padding: '1.75rem 0',
+          borderTop: '1px solid var(--border-subtle)',
+          borderBottom: '1px solid var(--border-subtle)',
           display: 'flex',
           justifyContent: 'center',
         }}>
@@ -95,14 +109,18 @@ export const Footer: React.FC = () => {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '0.75rem',
-          fontSize: '0.78rem',
-          color: '#9ca3af',
+          fontSize: '0.82rem',
+          color: 'var(--text-subtle)',
         }}>
           <div>
-            &copy; {new Date().getFullYear()} RizNex. Online image compression tool for JPG, PNG, and WebP.
+            &copy; {CURRENT_YEAR} RizNex. Online image compression tool for JPG, PNG, and WebP.
           </div>
-          <div>
-            Fast &bull; Private &bull; Free
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ color: 'var(--accent-purple)' }}>Fast</span>
+            <span>&bull;</span>
+            <span style={{ color: 'var(--accent-emerald)' }}>Private</span>
+            <span>&bull;</span>
+            <span style={{ color: 'var(--accent-blue)' }}>Free</span>
           </div>
         </div>
       </div>

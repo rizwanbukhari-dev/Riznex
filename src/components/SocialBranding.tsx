@@ -5,7 +5,7 @@ interface SocialBrandingProps {
   variant?: 'footer' | 'standalone';
 }
 
-export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'footer' }) => {
+export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant: _variant = 'footer' }) => {
   return (
     <div style={{
       display: 'flex',
@@ -22,11 +22,13 @@ export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'foote
           justifyContent: 'center',
           flexWrap: 'wrap',
           gap: '0.65rem',
-          padding: '0.55rem 1.25rem',
-          borderRadius: '9999px',
-          background: '#08090d',
-          border: '1px solid rgba(168, 85, 247, 0.35)',
-          boxShadow: '0 4px 20px -2px rgba(168, 85, 247, 0.2), 0 2px 6px rgba(0, 0, 0, 0.5)',
+          padding: '0.55rem 1.35rem',
+          borderRadius: 'var(--radius-full)',
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border-accent)',
+          boxShadow: '0 4px 20px -2px rgba(167, 139, 250, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           transition: 'all 0.25s ease',
         }}
         className="watermark-container"
@@ -38,10 +40,11 @@ export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'foote
           aria-label="RizNex Homepage"
           title="RizNex — Homepage"
           style={{
+            fontFamily: 'var(--font-heading)',
             fontWeight: 800,
-            fontSize: '0.92rem',
+            fontSize: '0.95rem',
             letterSpacing: '-0.02em',
-            background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)',
+            background: 'var(--brand-gradient)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             display: 'inline-flex',
@@ -52,12 +55,12 @@ export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'foote
             transition: 'opacity 0.2s ease',
           }}
         >
-          <Sparkles size={14} color="#a855f7" />
+          <Sparkles size={14} color="var(--accent-purple)" />
           <span>RizNex</span>
         </a>
 
         {/* Separator */}
-        <span style={{ color: 'rgba(168, 85, 247, 0.4)', fontWeight: 300, fontSize: '0.85rem' }}>
+        <span style={{ color: 'rgba(167, 139, 250, 0.35)', fontWeight: 300, fontSize: '0.85rem' }}>
           |
         </span>
 
@@ -70,19 +73,19 @@ export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'foote
           aria-label="Built by Syed Rizwan Bukhari — Open developer portfolio"
           title="Visit Syed Rizwan Bukhari's Developer Portfolio"
           style={{
-            fontSize: '0.86rem',
+            fontSize: '0.88rem',
             fontWeight: 600,
-            color: '#e2e8f0',
+            color: 'var(--text-secondary)',
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.35rem',
+            gap: '0.4rem',
             textDecoration: 'none',
             cursor: 'pointer',
             transition: 'color 0.2s ease',
           }}
         >
-          <span>Built by <strong style={{ color: '#c084fc' }}>Syed Rizwan Bukhari</strong></span>
-          <ExternalLink size={13} color="#a855f7" />
+          <span>Built by <strong style={{ color: 'var(--accent-purple-light)' }}>Syed Rizwan Bukhari</strong></span>
+          <ExternalLink size={13} color="var(--accent-purple)" />
         </a>
       </div>
 
@@ -156,41 +159,44 @@ export const SocialBranding: React.FC<SocialBrandingProps> = ({ variant = 'foote
         </a>
       </div>
 
-      {/* Scoped CSS for hover animations and purple styling matching portfolio */}
+      {/* Scoped CSS for hover animations and purple glowing styling matching portfolio */}
       <style>{`
         .watermark-container:hover {
-          border-color: rgba(168, 85, 247, 0.7) !important;
-          box-shadow: 0 0 24px rgba(168, 85, 247, 0.35), 0 4px 12px rgba(0, 0, 0, 0.6) !important;
-          transform: translateY(-1px);
+          border-color: var(--accent-purple) !important;
+          box-shadow: 0 0 24px rgba(167, 139, 250, 0.4), 0 4px 14px rgba(0, 0, 0, 0.7) !important;
+          transform: translateY(-2px);
         }
         .watermark-brand-link:hover {
-          opacity: 0.85;
+          opacity: 0.9;
         }
         .watermark-creator-link:hover {
           color: #ffffff !important;
-          text-decoration: underline !important;
         }
         .social-icon-btn {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          background: #08090d;
-          border: 1px solid rgba(168, 85, 247, 0.28);
-          color: #e2e8f0;
+          width: 42px;
+          height: 42px;
+          border-radius: var(--radius-sm);
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--border-accent);
+          color: var(--text-secondary);
           display: inline-flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
           transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--shadow-sm);
           text-decoration: none;
+          backdrop-filter: blur(8px);
         }
         .social-icon-btn:hover {
-          background: #12101a;
-          color: #c084fc;
-          border-color: #a855f7;
+          background: var(--accent-purple);
+          color: #08090d !important;
+          border-color: var(--accent-purple);
           transform: translateY(-3px);
-          box-shadow: 0 4px 16px rgba(168, 85, 247, 0.4);
+          box-shadow: var(--shadow-purple-glow);
+        }
+        .social-icon-btn:hover svg {
+          stroke: #08090d;
         }
         .social-icon-btn:active {
           transform: translateY(-1px);
